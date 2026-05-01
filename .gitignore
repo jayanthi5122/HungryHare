@@ -1,0 +1,11 @@
+# Ignore database file
+food_order.db
+
+# Ignore Python cache
+__pycache__/
+
+# Ignore JSON orders file
+data/orders.json
+
+# Ignore system files (Mac)
+.DS_Store
