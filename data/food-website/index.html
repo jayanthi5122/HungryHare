@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hungry Hare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>🍔 Hungry Hare</h1>
+
+<!-- LOGIN -->
+<div id="loginSection">
+    <h2>Login</h2>
+    <input id="username" placeholder="Enter your name">
+    <button onclick="login()">Login</button>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none">
+
+    <h2 id="welcome"></h2>
+
+    <h3>Menu</h3>
+    <div id="menu"></div>
+
+    <h3>Cart</h3>
+    <div id="cart"></div>
+
+    <h3 id="total">Total: $0</h3>
+
+    <button onclick="checkout()">Checkout</button>
+
+    <h3>Order History</h3>
+    <div id="history"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
