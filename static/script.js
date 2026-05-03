@@ -16,7 +16,7 @@ const menu = [
 ];
 
 let cart = [];
-let currentUser = "";
+let currentUser = "Jayanthi";
 
 // ---------- LOGIN ----------
 function login() {
@@ -70,6 +70,7 @@ function addToCart(index) {
         });
     }
 
+
     displayCart();
 }
 
@@ -98,6 +99,8 @@ function displayCart() {
         "Total: $" + total.toFixed(2);
 }
 
+
+
 function removeItem(index) {
     cart.splice(index, 1);
     displayCart();
@@ -114,31 +117,57 @@ function updateQty(index, change) {
 }
 
 // ---------- CHECKOUT ----------
-function checkout() {
+async function checkout() {
     if (cart.length === 0) {
         alert("Cart is empty");
         return;
     }
 
-    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+    let total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    let order = {
-        user: currentUser,
-        items: cart,
-        date: new Date().toLocaleString()
-    };
+    let response = await fetch("/checkout", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            user: currentUser,
+            cart: cart,
+            total: total
+        })
+    });
 
-    orders.push(order);
+    let data = await response.json();
 
-    localStorage.setItem("orders", JSON.stringify(orders));
+    alert(data.message);
 
     cart = [];
     displayCart();
-
-    loadHistory();
-
-    alert("Order placed successfully!");
 }
+async function viewOrders() {
+    let user = currentUser;  // make sure this exists
+
+    let response = await fetch(`/orders/${user}`);
+    let data = await response.json();
+
+    let output = "<h3>Order History</h3>";
+
+    data.forEach(order => {
+        let items = JSON.parse(order[0]);
+
+        output += "<div style='border:1px solid #ccc; margin:10px; padding:10px;'>";
+
+        for (let sku in items) {
+            output += `<p>${sku} × ${items[sku]}</p>`;
+        }
+
+        output += `<p><strong>Total: €${order[1]}</strong></p>`;
+        output += "</div>";
+    });
+
+    document.getElementById("orders").innerHTML = output;
+}
+<button onclick="viewOrders()">View Order History</button>
 
 // ---------- ORDER HISTORY ----------
 function loadHistory() {

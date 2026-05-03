@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Hungry Hare</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="{{ url_for('static', filename='script.js') }}"></script></head>
 
 <body>
 
@@ -35,6 +35,9 @@
     <div id="history"></div>
 
 </div>
+<button onclick="viewOrders()">View Order History</button>
+
+<div id="orders"></div>
 
 <script src="script.js"></script>
 
